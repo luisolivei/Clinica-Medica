@@ -13,5 +13,15 @@ class Especialidade extends Model
         'nome_especialidade',
     ];
 
+
+    public function rules()
+    {
+        return [
+            'nome_especialidade' => 'required|unique:especialidades,nome_especialidade,' . $this->id . '|min:3',
+        ];
+    }
+
     
+
+
 }
