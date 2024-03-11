@@ -16,5 +16,15 @@ class Medicamento extends Model
         'data_validade',
     ];
 
+    public function rules()
+    {
+        return [
+            'nome' => 'required|unique:medicamentos,nome,' . $this->id . ' |min:3',
+            'dosagem' => 'required',
+            'descricao' => 'required',
+            'data_validade' => 'required',
+        ];
+    }
+
 
 }
