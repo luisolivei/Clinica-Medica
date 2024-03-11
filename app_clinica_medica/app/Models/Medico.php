@@ -31,5 +31,14 @@ class Medico extends Model
         ];
     }
 
+    public function feedback()
+    {
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'unique' => 'O campo :attribute deve ser unico',
+            'min' => 'O campo :attribute deve ter pelo menos 3 caracteres',
+        ];
+    }
+
 
 }
