@@ -20,4 +20,16 @@ class Paciente extends Model
     ];
 
 
+    public function rules()
+    {
+        return [
+            'nome_paciente' => 'required|unique:pacientes,nome_paciente,' . $this->id . '|min:3',
+            'morada' => 'required',
+            'data_nascimento' => 'required',
+            'telemovel' => 'required|max:12|unique:pacientes,telemovel,' . $this->id,
+            'email' => 'required|unique:pacientes,email,' . $this->id,
+            'nif' => 'required|unique:pacientes,nif,' . $this->id,
+            'genero' => 'required',
+        ];
+    }
 }
