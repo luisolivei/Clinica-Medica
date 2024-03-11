@@ -18,5 +18,18 @@ class Consulta extends Model
         'descricao_consulta',
     ];
 
-    
+
+    public function rules()
+    {
+        return [
+            'id_pacientes' => 'required',
+            'NumeroConsulta' => 'required',
+            'descricao_consulta' => 'required',
+            'data_consulta' => 'required',
+            'hora_consulta' => 'required',
+            'status_consulta' => 'required',
+        ];
+    }
+
+
 }
