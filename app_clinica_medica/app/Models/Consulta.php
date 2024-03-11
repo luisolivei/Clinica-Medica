@@ -31,5 +31,12 @@ class Consulta extends Model
         ];
     }
 
+    public function feedback()
+    {
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+        ];
+    }
+
 
 }
