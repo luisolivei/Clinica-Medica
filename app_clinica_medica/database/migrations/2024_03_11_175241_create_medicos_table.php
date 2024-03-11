@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('medicos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome_medico');
+            $table->date('data_nascimento');
+            $table->string('telemovel', 9)->unique()->nullable();
+            $table->string('email')->unique();
+            $table->string('imagem', 30)->nullable()->comment('Imagem do medico');
+            $table->unsignedBigInteger('id_especialidades');
+            $table->foreign('id_especialidades')->references('id')->on('medicos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
