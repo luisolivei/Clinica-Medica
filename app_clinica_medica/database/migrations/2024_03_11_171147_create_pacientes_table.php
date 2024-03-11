@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('pacientes', function (Blueprint $table) {
             $table->id();
+            $table->string('nome_paciente', 255);
+            $table->enum('genero', ['Masculino', 'Femenino']);
+            $table->string('morada', 255);
+            $table->string('codigopostal', 9);
+            $table->string('nif', 9)->unique();
+            $table->string('imagem', 255)->nullable()->comment('Imagem do paciente');
+            $table->date('data_nascimento');
+            $table->string('telemovel', 26)->unique();
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }
