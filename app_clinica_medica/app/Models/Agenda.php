@@ -16,5 +16,14 @@ class Agenda extends Model
         'status_agenda',
     ];
 
-
+    public function rules()
+    {
+        return [
+            'id_medicos' => 'required',
+            'id_consultas' => 'required',
+            'data_agenda' => 'required',
+            'hora_agenda' => 'required',
+            'status_agenda' => 'required',
+        ];
+    }
 }
