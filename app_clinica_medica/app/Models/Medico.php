@@ -18,4 +18,18 @@ class Medico extends Model
 
 
     ];
+
+    public function rules()
+    {
+        return [
+            'nome_medico' => 'required |unique:medicos,nome_medico,' . $this->id . ' |min:3',
+            'data_nascimento' => 'required |date',
+            'telemovel' => 'required |unique:medicos,telemovel',
+            'email' => 'required |unique:medicos,email',
+            'id_especialidades' => 'required |exists:especialidades,id',
+
+        ];
+    }
+
+
 }
