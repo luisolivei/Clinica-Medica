@@ -26,4 +26,14 @@ class Agenda extends Model
             'status_agenda' => 'required',
         ];
     }
+
+    public function feedback()
+    {
+        return [
+            'required' => 'O campo :attribute deve ser preenchido'
+
+        ];
+    }
+
+
 }
