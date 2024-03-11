@@ -32,4 +32,16 @@ class Paciente extends Model
             'genero' => 'required',
         ];
     }
+
+    public function feedback()
+    {
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'telemovel.max' => 'O campo :attribute deve ter no maximo 12 carateres',
+            'unique' => 'O campo :attribute deve ser unico',
+            'nome.min' => 'O campo :attribute deve ter no minimo 3 carateres',
+
+        ];
+    }
+
 }
