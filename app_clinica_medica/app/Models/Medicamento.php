@@ -26,5 +26,15 @@ class Medicamento extends Model
         ];
     }
 
+    public function feedback()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'min' => 'O campo :attribute deve ter no mínimo 3 caracteres',
+            'unique' => 'O campo :attribute deve ser único',
+            'data_validade' => 'O campo :attribute deve ser uma data',
+        ];
+    }
+
 
 }
