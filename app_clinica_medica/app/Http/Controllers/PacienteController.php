@@ -33,9 +33,12 @@ class PacienteController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
+     *
      */
-    public function show(Paciente $paciente)
+    public function show($id)
     {
+        $paciente = $this->paciente->find($id);
         return response()->json($paciente);
     }
 
