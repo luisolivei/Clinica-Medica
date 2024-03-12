@@ -18,7 +18,8 @@ class ConsultaController extends Controller
      */
     public function index()
     {
-        $consultas = Consulta::all();
+        // $consultas = Consulta::all();
+        $consultas = $this->consulta->all();
         return response()->json($consultas);
     }
 
