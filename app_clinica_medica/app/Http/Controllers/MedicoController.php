@@ -34,9 +34,11 @@ class MedicoController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
      */
-    public function show(Medico $medico)
+    public function show($id)
     {
+        $medico = $this->medico->find($id);
         return response()->json($medico);
     }
 
