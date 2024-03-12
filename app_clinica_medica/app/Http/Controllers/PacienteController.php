@@ -53,6 +53,9 @@ class PacienteController extends Controller
     {
         // $paciente->update($request->all());
         $paciente = $this->paciente->find($id);
+        if($paciente === null){
+            return response()->json(['erro' => 'Impossivel realizar a atualização. Paciente não encontrado'], 404);
+        }
         $paciente->update($request->all());
         return response()->json($paciente, 200);
     }
