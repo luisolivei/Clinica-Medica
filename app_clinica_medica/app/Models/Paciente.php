@@ -44,4 +44,11 @@ class Paciente extends Model
         ];
     }
 
+    public function consultas()
+
+    {
+        // um paciente tem muitas consultas
+        return $this->hasMany(Consulta::class, 'id_pacientes');
+    }
+
 }
