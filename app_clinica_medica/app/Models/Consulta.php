@@ -39,7 +39,7 @@ class Consulta extends Model
     }
 
 
-    public function paciente()
+    public function pacientes()
     {
         // uma consulta tem um paciente
         return $this->belongsTo(Paciente::class, 'id_pacientes');
