@@ -46,5 +46,11 @@ class Medico extends Model
         return $this->belongsTo(Especialidade::class, 'id_especialidades');
     }
 
+    public function agendas()
+    {
+        // um medico tem muitas agendas
+        return $this->hasMany(Agenda::class, 'id_medicos');
+    }
+
 
 }
