@@ -39,6 +39,9 @@ class MedicamentoController extends Controller
     public function show($id)
     {
         $medicamento = $this->medicamento->find($id);
+        if ($medicamento === null) {
+            return response()->json(['erro' => 'Medicamento não encontrado'], 404);
+        }
         return response()->json($medicamento);
     }
 
@@ -50,6 +53,9 @@ class MedicamentoController extends Controller
     {
         // $medicamento->update($request->all());
         $medicamento = $this->medicamento->find($id);
+        if ($medicamento === null) {
+            return response()->json(['erro' => 'Impossivel realizar a atualização. Medicamento não encontrado'], 404);
+        }
         $medicamento->update($request->all());
         return response()->json($medicamento, 200);
     }
@@ -61,6 +67,9 @@ class MedicamentoController extends Controller
     public function destroy($id)
     {
         $medicamento = $this->medicamento->find($id);
+        if ($medicamento === null) {
+            return response()->json(['erro' => ' Impossivel realizar a exclusão. Medicamento não encontrado'], 404);
+        }
         $medicamento->delete();
         return ['msg' => 'Medicamento excluido com sucesso!'];
     }
