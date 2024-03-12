@@ -28,9 +28,9 @@ class ConsultaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Consulta $consulta)
     {
-        //
+        return response()->json($consulta);
     }
 
     /**
