@@ -66,8 +66,27 @@ class MedicoController extends Controller
         if ($medico === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Medico não encontrado'], 404);
         }
-        $request->validate($this->medico->rules(), $this->medico->feedback());
-        $medico->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($medico->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas);
+        } else {
+            $request->validate($medico->rules());
+        }
+
+
+        $medico->fill($request->all());
+        $medico->save();
         return response()->json($medico, 200);
     }
 
