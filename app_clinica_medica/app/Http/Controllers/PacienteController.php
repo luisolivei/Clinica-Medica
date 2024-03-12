@@ -16,7 +16,8 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::all();
+        // $pacientes = Paciente::all();
+        $pacientes = $this->paciente->all();
         return response()->json($pacientes);
     }
 
