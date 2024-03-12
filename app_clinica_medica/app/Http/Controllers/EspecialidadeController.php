@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Especialidade;
 
 class EspecialidadeController extends Controller
 {
@@ -19,7 +20,8 @@ class EspecialidadeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $especialidade = Especialidade::create($request->all());
+        return response()->json($especialidade, 201);
     }
 
     /**
