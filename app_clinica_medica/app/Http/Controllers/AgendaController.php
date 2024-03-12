@@ -17,7 +17,8 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::all();
+        // $agendas = Agenda::all();
+        $agendas = $this->agenda->all();
         return response()->json($agendas);
     }
 
