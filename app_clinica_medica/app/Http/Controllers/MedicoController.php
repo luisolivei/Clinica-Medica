@@ -28,9 +28,9 @@ class MedicoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Medico $medico)
     {
-        //
+        return response()->json($medico);
     }
 
     /**
