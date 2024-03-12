@@ -61,6 +61,8 @@ class EspecialidadeController extends Controller
         if ($especialidade === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Especialidade não encontrada'], 404);
         }
+
+        $request->validate($this->especialidade->rules(), $this->especialidade->feedback());
         $especialidade->update($request->all());
         return response()->json($especialidade, 200);
     }
