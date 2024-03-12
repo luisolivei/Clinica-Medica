@@ -28,7 +28,18 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         // $agenda = Agenda::create($request->all());
-        $agenda = $this->agenda->create($request->all());
+        // $agenda = $this->agenda->create($request->all());
+        $request->validate($this->agenda->rules(), $this->agenda->feedback());
+
+        $agenda = $this->agenda->create([
+            'id_medicos' => $request->id_medicos,
+            'id_consultas' => $request->id_consultas,
+            'data_agenda' => $request->data_agenda,
+            'hora_agenda' => $request->hora_agenda,
+            'status_agenda' => $request->status_agenda,
+
+        ]);
+
         return response()->json($agenda, 201);
     }
 
