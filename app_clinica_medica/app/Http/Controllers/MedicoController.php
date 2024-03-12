@@ -45,8 +45,9 @@ class MedicoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Medico $medico)
     {
-        //
+        $medico->delete();
+        return ['msg' => 'Médico excluido com sucesso!'];
     }
 }
