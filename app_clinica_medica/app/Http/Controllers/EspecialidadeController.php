@@ -44,9 +44,12 @@ class EspecialidadeController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Especialidade $especialidade)
+    public function update(Request $request, $id)
     {
+        // $especialidade->update($request->all());
+        $especialidade = $this->especialidade->find($id);
         $especialidade->update($request->all());
         return response()->json($especialidade, 200);
     }
