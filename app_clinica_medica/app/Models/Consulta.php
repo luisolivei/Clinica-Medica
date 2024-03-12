@@ -48,7 +48,7 @@ class Consulta extends Model
     public function agendas()
     {
         // uma consulta tem uma agenda
-        return $this->belongsTo(Agenda::class, 'id_consultas');
+        return $this->belongsTo(Agenda::class, 'id_agendas');
     }
 
     public function especialidades()
