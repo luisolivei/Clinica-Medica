@@ -39,6 +39,9 @@ class PacienteController extends Controller
     public function show($id)
     {
         $paciente = $this->paciente->find($id);
+        if($paciente === null){
+            return response()->json(['erro' => 'Paciente não encontrado'], 404);
+        }
         return response()->json($paciente);
     }
 
