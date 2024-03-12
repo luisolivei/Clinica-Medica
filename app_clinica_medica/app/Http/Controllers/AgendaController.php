@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
+    protected $agenda;
+    public function __construct(Agenda $agenda)
+    {
+        $this->agenda = $agenda;
+    }
     /**
      * Display a listing of the resource.
      */
