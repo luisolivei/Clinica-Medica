@@ -44,9 +44,12 @@ class MedicamentoController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Medicamento $medicamento)
+    public function update(Request $request,$id)
     {
+        // $medicamento->update($request->all());
+        $medicamento = $this->medicamento->find($id);
         $medicamento->update($request->all());
         return response()->json($medicamento, 200);
     }
