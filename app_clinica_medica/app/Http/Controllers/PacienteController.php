@@ -44,9 +44,12 @@ class PacienteController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Paciente $paciente)
+    public function update(Request $request, $id)
     {
+        // $paciente->update($request->all());
+        $paciente = $this->paciente->find($id);
         $paciente->update($request->all());
         return response()->json($paciente, 200);
     }
