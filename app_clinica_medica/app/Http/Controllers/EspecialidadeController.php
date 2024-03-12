@@ -28,9 +28,9 @@ class EspecialidadeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Especialidade $especialidade)
     {
-        //
+        return response()->json($especialidade);
     }
 
     /**
