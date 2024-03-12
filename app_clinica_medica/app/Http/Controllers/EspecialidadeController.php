@@ -19,7 +19,7 @@ class EspecialidadeController extends Controller
     {
         // $especialidades = Especialidade::all();
         $especialidades = $this->especialidade->all();
-        return response()->json($especialidades);
+        return response()->json($especialidades ,200);
     }
 
     /**
@@ -42,7 +42,7 @@ class EspecialidadeController extends Controller
         if ($especialidade === null) {
             return response()->json(['erro' => 'Especialidade não encontrada'], 404);
         }
-        return response()->json($especialidade);
+        return response()->json($especialidade ,200);
     }
 
     /**
@@ -71,6 +71,6 @@ class EspecialidadeController extends Controller
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Especialidade não encontrada'], 404);
         }
         $especialidade->delete();
-        return ['msg' => 'Especialidade excluida com sucesso!'];
+        return response()->json(['msg' => 'Especialidade excluida com sucesso!'], 200);
     }
 }
