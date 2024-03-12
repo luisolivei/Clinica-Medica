@@ -48,7 +48,7 @@ class Paciente extends Model
 
     {
         // um paciente tem muitas consultas
-        return $this->hasMany(Consulta::class, 'id_pacientes');
+        return $this->hasMany(Consulta::class, 'id_consultas');
     }
 
 }
