@@ -39,6 +39,9 @@ class AgendaController extends Controller
     public function show($id)
     {
         $agenda = $this->agenda->find($id);
+        if ($agenda === null) {
+            return response()->json(['erro' => 'Agenda não encontrada'], 404);
+        }
         return response()->json($agenda);
     }
 
@@ -50,6 +53,9 @@ class AgendaController extends Controller
     {
         // $agenda->update($request->all());
         $agenda = $this->agenda->find($id);
+        if ($agenda === null) {
+            return response()->json(['erro' => 'Impossivel realizar a atualização. Agenda não encontrada'], 404);
+        }
         $agenda->update($request->all());
         return response()->json($agenda, 200);
     }
@@ -61,6 +67,9 @@ class AgendaController extends Controller
     public function destroy($id)
     {
         $agenda = $this->agenda->find($id);
+        if ($agenda === null) {
+            return response()->json(['erro' => ' Impossivel realizar a exclusão. Agenda não encontrada'], 404);
+        }
         $agenda->delete();
         return ['msg' => 'Agenda excluida com sucesso!'];
     }
