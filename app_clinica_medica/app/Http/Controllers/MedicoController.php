@@ -37,6 +37,7 @@ class MedicoController extends Controller
             'data_nascimento' => $request->data_nascimento,
             'telemovel' => $request->telemovel,
             'email' => $request->email,
+            'imagem' => $request->imagem,
 
         ]);
         return response()->json($medico, 201);
