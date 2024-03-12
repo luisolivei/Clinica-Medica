@@ -68,8 +68,26 @@ class AgendaController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a atualização. Agenda não encontrada'], 404);
         }
 
-        $request->validate($this->agenda->rules(), $this->agenda->feedback());
-        $agenda->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($agenda->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas);
+        } else {
+            $request->validate($agenda->rules(), $agenda->feedback());;
+        }
+
+        $agenda->fill($request->all());
+        $agenda->save();
         return response()->json($agenda, 200);
     }
 
