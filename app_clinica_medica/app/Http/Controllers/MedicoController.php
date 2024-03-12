@@ -19,7 +19,7 @@ class MedicoController extends Controller
     {
         // $medicos = Medico::all();
         $medicos = $this->medico->all();
-        return response()->json($medicos);
+        return response()->json($medicos ,200);
     }
 
     /**
@@ -42,7 +42,7 @@ class MedicoController extends Controller
         if ($medico === null) {
             return response()->json(['erro' => 'Medico não encontrado'], 404);
         }
-        return response()->json($medico);
+        return response()->json($medico,200);
     }
 
     /**
@@ -71,6 +71,6 @@ class MedicoController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a exclusão. Médico não encontrado'], 404);
         }
         $medico->delete();
-        return ['msg' => 'Médico excluido com sucesso!'];
+        return response()->json(['msg' => 'Médico excluido com sucesso!'], 200);
     }
 }
