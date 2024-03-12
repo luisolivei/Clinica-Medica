@@ -34,9 +34,11 @@ class EspecialidadeController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
      */
-    public function show(Especialidade $especialidade)
+    public function show($id)
     {
+        $especialidade = $this->especialidade->find($id);
         return response()->json($especialidade);
     }
 
