@@ -28,7 +28,8 @@ class ConsultaController extends Controller
      */
     public function store(Request $request)
     {
-        $consulta = Consulta::create($request->all());
+        // $consulta = Consulta::create($request->all());
+        $consulta = $this->consulta->create($request->all());
         return response()->json($consulta, 201);
     }
 
