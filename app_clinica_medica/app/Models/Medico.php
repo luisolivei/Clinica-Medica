@@ -40,5 +40,11 @@ class Medico extends Model
         ];
     }
 
+    public function especialidades()
+    {
+        // um medico tem uma especialidade
+        return $this->belongsTo(Especialidade::class, 'id_especialidades');
+    }
+
 
 }
