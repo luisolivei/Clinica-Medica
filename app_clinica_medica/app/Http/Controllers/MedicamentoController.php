@@ -12,7 +12,8 @@ class MedicamentoController extends Controller
      */
     public function index()
     {
-        //
+        $medicamentos = Medicamento::all();
+        return response()->json($medicamentos);
     }
 
     /**
