@@ -29,7 +29,20 @@ class ConsultaController extends Controller
     public function store(Request $request)
     {
         // $consulta = Consulta::create($request->all());
-        $consulta = $this->consulta->create($request->all());
+        // $consulta = $this->consulta->create($request->all());
+        $request->validate($this->consulta->rules(), $this->consulta->feedback());
+
+        $consulta = $this->consulta->create([
+            'id_pacientes' => $request->id_pacientes,
+            'data_consulta' => $request->data_consulta,
+            'hora_consulta' => $request->hora_consulta,
+            'status_consulta' => $request->status_consulta,
+            'descricao_consulta' => $request->descricao_consulta,
+            'NumeroConsulta' => $request->NumeroConsulta
+
+        ]);
+
+
         return response()->json($consulta, 201);
     }
 
