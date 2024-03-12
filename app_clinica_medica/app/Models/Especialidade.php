@@ -40,7 +40,7 @@ class Especialidade extends Model
     public function consultas()
     {
         // uma especialidade tem muitas consultas
-        return $this->belongsToMany(Consulta::class);
+        return $this->belongsToMany(Consulta::class, 'id_consultas');
     }
 
 
