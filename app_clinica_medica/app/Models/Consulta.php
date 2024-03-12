@@ -45,5 +45,11 @@ class Consulta extends Model
         return $this->belongsTo(Paciente::class, 'id_pacientes');
     }
 
+    public function agendas()
+    {
+        // uma consulta tem uma agenda
+        return $this->belongsTo(Agenda::class, 'id_consultas');
+    }
+
 
 }
