@@ -67,6 +67,8 @@ class AgendaController extends Controller
         if ($agenda === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Agenda não encontrada'], 404);
         }
+
+        $request->validate($this->agenda->rules(), $this->agenda->feedback());
         $agenda->update($request->all());
         return response()->json($agenda, 200);
     }
