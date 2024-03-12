@@ -45,9 +45,12 @@ class ConsultaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Consulta $consulta)
+    public function update(Request $request, $id)
     {
+        // $consulta->update($request->all());
+        $consulta = $this->consulta->find($id);
         $consulta->update($request->all());
         return response()->json($consulta, 200);
     }
