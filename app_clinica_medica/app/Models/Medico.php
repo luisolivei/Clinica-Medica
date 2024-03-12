@@ -15,6 +15,7 @@ class Medico extends Model
         'telemovel',
         'email',
         'id_especialidades',
+        'imagem',
 
 
     ];
@@ -27,6 +28,7 @@ class Medico extends Model
             'telemovel' => 'required |unique:medicos,telemovel',
             'email' => 'required |unique:medicos,email',
             'id_especialidades' => 'required |exists:especialidades,id',
+            'imagem' => 'required |image',
 
         ];
     }
@@ -37,6 +39,7 @@ class Medico extends Model
             'required' => 'O campo :attribute deve ser preenchido',
             'unique' => 'O campo :attribute deve ser unico',
             'min' => 'O campo :attribute deve ter pelo menos 3 caracteres',
+            'imagem' => 'O campo :attribute deve ser uma imagem',
         ];
     }
 
