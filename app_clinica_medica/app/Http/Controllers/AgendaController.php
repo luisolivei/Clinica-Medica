@@ -19,7 +19,7 @@ class AgendaController extends Controller
     {
         // $agendas = Agenda::all();
         $agendas = $this->agenda->all();
-        return response()->json($agendas);
+        return response()->json($agendas,200);
     }
 
     /**
@@ -42,7 +42,7 @@ class AgendaController extends Controller
         if ($agenda === null) {
             return response()->json(['erro' => 'Agenda não encontrada'], 404);
         }
-        return response()->json($agenda);
+        return response()->json($agenda,200);
     }
 
     /**
@@ -71,6 +71,6 @@ class AgendaController extends Controller
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Agenda não encontrada'], 404);
         }
         $agenda->delete();
-        return ['msg' => 'Agenda excluida com sucesso!'];
+        return response()->json( ['msg' => 'Agenda excluida com sucesso!'], 200);
     }
 }
