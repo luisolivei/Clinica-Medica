@@ -71,8 +71,26 @@ class ConsultaController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a atualização. Consulta não encontrada'], 404);
         }
 
-        $request->validate($this->consulta->rules(), $this->consulta->feedback());
-        $consulta->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($consulta->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas);
+        } else {
+            $request->validate($consulta->rules(), $consulta->feedback());;
+        }
+
+        $consulta->fill($request->all());
+        $consulta->save();
         return response()->json($consulta, 200);
     }
 
