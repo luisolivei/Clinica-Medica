@@ -28,7 +28,15 @@ class MedicamentoController extends Controller
     public function store(Request $request)
     {
         // $medicamento = Medicamento::create($request->all());
-        $medicamento = $this->medicamento->create($request->all());
+        // $medicamento = $this->medicamento->create($request->all());
+        $request->validate($this->medicamento->rules(), $this->medicamento->feedback());
+
+        $medicamento = $this->medicamento->create([
+            'nome' => $request->nome,
+            'dosagem' => $request->dosagem,
+            'descricao' => $request->descricao,
+            'data_validade' => $request->data_validade,
+        ]);
         return response()->json($medicamento, 201);
     }
 
