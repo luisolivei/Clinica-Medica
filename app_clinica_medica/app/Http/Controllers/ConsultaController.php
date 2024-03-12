@@ -70,6 +70,8 @@ class ConsultaController extends Controller
         if ($consulta === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Consulta não encontrada'], 404);
         }
+
+        $request->validate($this->consulta->rules(), $this->consulta->feedback());
         $consulta->update($request->all());
         return response()->json($consulta, 200);
     }
