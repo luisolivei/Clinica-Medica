@@ -35,9 +35,11 @@ class ConsultaController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
      */
-    public function show(Consulta $consulta)
+    public function show($id)
     {
+        $consulta = $this->consulta->find($id);
         return response()->json($consulta);
     }
 
