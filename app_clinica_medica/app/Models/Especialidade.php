@@ -31,6 +31,13 @@ class Especialidade extends Model
     }
 
 
+    public function medicos()
+    {
+        // uma especialidade tem muitos medicos
+        return $this->hasMany(Medico::class, 'id_especialidades');
+    }
+
+
 
 
 }
