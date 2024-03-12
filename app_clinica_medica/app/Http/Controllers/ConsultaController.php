@@ -57,9 +57,11 @@ class ConsultaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Integer
      */
-    public function destroy(Consulta $consulta)
+    public function destroy($id)
     {
+        $consulta = $this->consulta->find($id);
         $consulta->delete();
         return ['msg' => 'Consulta excluida com sucesso!'];
     }
