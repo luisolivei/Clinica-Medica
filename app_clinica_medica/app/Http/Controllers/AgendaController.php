@@ -44,9 +44,12 @@ class AgendaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Agenda $agenda)
+    public function update(Request $request, $id)
     {
+        // $agenda->update($request->all());
+        $agenda = $this->agenda->find($id);
         $agenda->update($request->all());
         return response()->json($agenda, 200);
     }
