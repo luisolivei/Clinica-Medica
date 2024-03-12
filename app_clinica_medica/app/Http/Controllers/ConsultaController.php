@@ -20,7 +20,7 @@ class ConsultaController extends Controller
     {
         // $consultas = Consulta::all();
         $consultas = $this->consulta->all();
-        return response()->json($consultas);
+        return response()->json($consultas ,200);
     }
 
     /**
@@ -43,7 +43,7 @@ class ConsultaController extends Controller
         if ($consulta === null) {
             return response()->json(['erro' => 'Consulta não encontrada'], 404);
         }
-        return response()->json($consulta);
+        return response()->json($consulta ,200);
     }
 
     /**
@@ -72,6 +72,6 @@ class ConsultaController extends Controller
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Consulta não encontrada'], 404);
         }
         $consulta->delete();
-        return ['msg' => 'Consulta excluida com sucesso!'];
+        return response()->json(['msg' => 'Consulta excluida com sucesso!'], 200);
     }
 }
