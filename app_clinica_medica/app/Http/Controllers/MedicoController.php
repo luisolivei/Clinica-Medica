@@ -44,9 +44,12 @@ class MedicoController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Integer
      */
-    public function update(Request $request, Medico $medico)
+    public function update(Request $request, $id)
     {
+        // $medico->update($request->all());
+        $medico = $this->medico->find($id);
         $medico->update($request->all());
         return response()->json($medico, 200);
     }
