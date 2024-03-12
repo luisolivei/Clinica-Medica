@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Medico;
 use Illuminate\Http\Request;
 
 class MedicoController extends Controller
@@ -19,7 +20,8 @@ class MedicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $medico = Medico::create($request->all());
+        return response()->json($medico, 201);
     }
 
     /**
