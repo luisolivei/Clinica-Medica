@@ -62,7 +62,7 @@ class MedicoController extends Controller
     {
         $medico = $this->medico->find($id);
         if ($medico === null) {
-            return response()->json(['erro' => 'Impossivel realizar a atualização. Médico não encontrado'], 404);
+            return response()->json(['erro' => 'Impossivel realizar a exclusão. Médico não encontrado'], 404);
         }
         $medico->delete();
         return ['msg' => 'Médico excluido com sucesso!'];
