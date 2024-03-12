@@ -64,6 +64,7 @@ class MedicamentoController extends Controller
         if ($medicamento === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Medicamento não encontrado'], 404);
         }
+        $request->validate($this->medicamento->rules(), $this->medicamento->feedback());
         $medicamento->update($request->all());
         return response()->json($medicamento, 200);
     }
