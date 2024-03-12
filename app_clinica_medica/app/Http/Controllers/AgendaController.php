@@ -34,9 +34,11 @@ class AgendaController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
      */
-    public function show(Agenda $agenda)
+    public function show($id)
     {
+        $agenda = $this->agenda->find($id);
         return response()->json($agenda);
     }
 
