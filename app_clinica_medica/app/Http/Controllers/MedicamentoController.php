@@ -19,7 +19,7 @@ class MedicamentoController extends Controller
     {
         // $medicamentos = Medicamento::all();
         $medicamentos = $this->medicamento->all();
-        return response()->json($medicamentos);
+        return response()->json($medicamentos ,200);
     }
 
     /**
@@ -42,7 +42,7 @@ class MedicamentoController extends Controller
         if ($medicamento === null) {
             return response()->json(['erro' => 'Medicamento não encontrado'], 404);
         }
-        return response()->json($medicamento);
+        return response()->json($medicamento,200);
     }
 
     /**
@@ -71,6 +71,6 @@ class MedicamentoController extends Controller
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Medicamento não encontrado'], 404);
         }
         $medicamento->delete();
-        return ['msg' => 'Medicamento excluido com sucesso!'];
+        return response()->json(['msg' => 'Medicamento excluido com sucesso!'], 200);
     }
 }
