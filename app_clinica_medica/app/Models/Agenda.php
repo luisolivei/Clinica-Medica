@@ -36,4 +36,11 @@ class Agenda extends Model
     }
 
 
+    public function medico()
+    {
+        // uma agenda tem um medico
+        return $this->belongsTo(Medico::class, 'id_medicos', 'id');
+    }
+
+
 }
