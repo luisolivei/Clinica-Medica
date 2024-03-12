@@ -27,7 +27,8 @@ class EspecialidadeController extends Controller
      */
     public function store(Request $request)
     {
-        $especialidade = Especialidade::create($request->all());
+        // $especialidade = Especialidade::create($request->all());
+        $especialidade = $this->especialidade->create($request->all());
         return response()->json($especialidade, 201);
     }
 
