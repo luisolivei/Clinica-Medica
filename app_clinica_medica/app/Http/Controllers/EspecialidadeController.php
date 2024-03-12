@@ -39,6 +39,9 @@ class EspecialidadeController extends Controller
     public function show($id)
     {
         $especialidade = $this->especialidade->find($id);
+        if ($especialidade === null) {
+            return response()->json(['erro' => 'Especialidade não encontrada'], 404);
+        }
         return response()->json($especialidade);
     }
 
@@ -50,6 +53,9 @@ class EspecialidadeController extends Controller
     {
         // $especialidade->update($request->all());
         $especialidade = $this->especialidade->find($id);
+        if ($especialidade === null) {
+            return response()->json(['erro' => 'Impossivel realizar a atualização. Especialidade não encontrada'], 404);
+        }
         $especialidade->update($request->all());
         return response()->json($especialidade, 200);
     }
@@ -61,6 +67,9 @@ class EspecialidadeController extends Controller
     public function destroy($id)
     {
         $especialidade = $this->especialidade->find($id);
+        if ($especialidade === null) {
+            return response()->json(['erro' => ' Impossivel realizar a exclusão. Especialidade não encontrada'], 404);
+        }
         $especialidade->delete();
         return ['msg' => 'Especialidade excluida com sucesso!'];
     }
