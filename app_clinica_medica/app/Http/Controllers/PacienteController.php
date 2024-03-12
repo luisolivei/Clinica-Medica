@@ -71,8 +71,26 @@ class PacienteController extends Controller
         if($paciente === null){
             return response()->json(['erro' => 'Impossivel realizar a atualização. Paciente não encontrado'], 404);
         }
-        $request->validate($this->paciente->rules(), $this->paciente->feedback());
-        $paciente->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($paciente->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas);
+        } else {
+            $request->validate($paciente->rules(), $paciente->feedback());
+        }
+
+        $paciente->fill($request->all());
+        $paciente->save();
         return response()->json($paciente, 200);
     }
 
