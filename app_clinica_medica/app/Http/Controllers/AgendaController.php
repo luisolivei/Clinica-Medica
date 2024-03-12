@@ -27,7 +27,8 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        $agenda = Agenda::create($request->all());
+        // $agenda = Agenda::create($request->all());
+        $agenda = $this->agenda->create($request->all());
         return response()->json($agenda, 201);
     }
 
