@@ -67,6 +67,9 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         $paciente = $this->paciente->find($id);
+        if($paciente === null){
+            return response()->json(['erro' => ' Impossivel realizar a exclusão. Paciente não encontrado'], 404);
+        }
         $paciente->delete();
         return ['msg' => 'Paciente excluido com sucesso!'];
     }
