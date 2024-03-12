@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 
 class PacienteController extends Controller
@@ -19,7 +20,8 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paciente = Paciente::create($request->all());
+        return response()->json($paciente, 201);
     }
 
     /**
