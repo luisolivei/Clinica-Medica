@@ -71,6 +71,7 @@ class PacienteController extends Controller
         if($paciente === null){
             return response()->json(['erro' => 'Impossivel realizar a atualização. Paciente não encontrado'], 404);
         }
+        $request->validate($this->paciente->rules(), $this->paciente->feedback());
         $paciente->update($request->all());
         return response()->json($paciente, 200);
     }
