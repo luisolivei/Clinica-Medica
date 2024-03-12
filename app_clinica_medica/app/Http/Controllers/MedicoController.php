@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class MedicoController extends Controller
 {
+    protected $medico;
+    public function __construct(Medico $medico)
+    {
+        $this->medico = $medico;
+    }
     /**
      * Display a listing of the resource.
      */
