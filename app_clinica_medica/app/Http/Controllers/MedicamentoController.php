@@ -64,8 +64,26 @@ class MedicamentoController extends Controller
         if ($medicamento === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Medicamento não encontrado'], 404);
         }
-        $request->validate($this->medicamento->rules(), $this->medicamento->feedback());
-        $medicamento->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($medicamento->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas);
+        } else {
+            $request->validate($medicamento->rules(), $medicamento->feedback());;
+        }
+
+        $medicamento->fill($request->all());
+        $medicamento->save();
         return response()->json($medicamento, 200);
     }
 
