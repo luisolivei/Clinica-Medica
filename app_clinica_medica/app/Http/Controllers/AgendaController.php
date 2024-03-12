@@ -56,9 +56,11 @@ class AgendaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Integer
      */
-    public function destroy(Agenda $agenda)
+    public function destroy($id)
     {
+        $agenda = $this->agenda->find($id);
         $agenda->delete();
         return ['msg' => 'Agenda excluida com sucesso!'];
     }
