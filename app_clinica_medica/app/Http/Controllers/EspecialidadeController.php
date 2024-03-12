@@ -62,8 +62,26 @@ class EspecialidadeController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a atualização. Especialidade não encontrada'], 404);
         }
 
-        $request->validate($this->especialidade->rules(), $this->especialidade->feedback());
-        $especialidade->update($request->all());
+        if ($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach ($especialidade->rules() as $input => $regra) {
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            $request->validate($regrasDinamicas, $especialidade->feedback());
+        } else {
+            $request->validate($especialidade->rules(), $especialidade->feedback());
+        }
+
+        $especialidade->fill($request->all());
+        $especialidade->save();
         return response()->json($especialidade, 200);
     }
 
