@@ -56,9 +56,11 @@ class EspecialidadeController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Integer
      */
-    public function destroy(Especialidade $especialidade)
+    public function destroy($id)
     {
+        $especialidade = $this->especialidade->find($id);
         $especialidade->delete();
         return ['msg' => 'Especialidade excluida com sucesso!'];
     }
