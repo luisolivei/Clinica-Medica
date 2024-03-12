@@ -40,6 +40,9 @@ class ConsultaController extends Controller
     public function show($id)
     {
         $consulta = $this->consulta->find($id);
+        if ($consulta === null) {
+            return response()->json(['erro' => 'Consulta não encontrada'], 404);
+        }
         return response()->json($consulta);
     }
 
@@ -51,6 +54,9 @@ class ConsultaController extends Controller
     {
         // $consulta->update($request->all());
         $consulta = $this->consulta->find($id);
+        if ($consulta === null) {
+            return response()->json(['erro' => 'Impossivel realizar a atualização. Consulta não encontrada'], 404);
+        }
         $consulta->update($request->all());
         return response()->json($consulta, 200);
     }
@@ -62,6 +68,9 @@ class ConsultaController extends Controller
     public function destroy($id)
     {
         $consulta = $this->consulta->find($id);
+        if ($consulta === null) {
+            return response()->json(['erro' => ' Impossivel realizar a exclusão. Consulta não encontrada'], 404);
+        }
         $consulta->delete();
         return ['msg' => 'Consulta excluida com sucesso!'];
     }
