@@ -18,7 +18,7 @@ class PacienteController extends Controller
     {
         // $pacientes = Paciente::all();
         $pacientes = $this->paciente->all();
-        return response()->json($pacientes);
+        return response()->json($pacientes,200);
     }
 
     /**
@@ -42,7 +42,7 @@ class PacienteController extends Controller
         if($paciente === null){
             return response()->json(['erro' => 'Paciente não encontrado'], 404);
         }
-        return response()->json($paciente);
+        return response()->json($paciente,200);
     }
 
     /**
@@ -71,6 +71,6 @@ class PacienteController extends Controller
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Paciente não encontrado'], 404);
         }
         $paciente->delete();
-        return ['msg' => 'Paciente excluido com sucesso!'];
+        return response()->json(['msg' => 'Paciente excluido com sucesso!'], 200);
     }
 }
