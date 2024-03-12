@@ -66,6 +66,7 @@ class MedicoController extends Controller
         if ($medico === null) {
             return response()->json(['erro' => 'Impossivel realizar a atualização. Medico não encontrado'], 404);
         }
+        $request->validate($this->medico->rules(), $this->medico->feedback());
         $medico->update($request->all());
         return response()->json($medico, 200);
     }
