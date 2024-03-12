@@ -38,6 +38,7 @@ class PacienteController extends Controller
             'email' => $request->email,
             'nif' => $request->nif,
             'genero' => $request->genero,
+            'imagem' => $request->imagem,
 
 
 
