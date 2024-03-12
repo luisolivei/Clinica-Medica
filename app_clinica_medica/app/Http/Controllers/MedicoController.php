@@ -28,7 +28,17 @@ class MedicoController extends Controller
     public function store(Request $request)
     {
         // $medico = Medico::create($request->all());
-        $medico = $this->medico->create($request->all());
+        // $medico = $this->medico->create($request->all());
+        $request->validate($this->medico->rules(), $this->medico->feedback());
+
+        $medico = $this->medico->create([
+            'nome_medico' => $request->nome_medico,
+            'id_especialidades' => $request->id_especialidades,
+            'data_nascimento' => $request->data_nascimento,
+            'telemovel' => $request->telemovel,
+            'email' => $request->email,
+
+        ]);
         return response()->json($medico, 201);
     }
 
