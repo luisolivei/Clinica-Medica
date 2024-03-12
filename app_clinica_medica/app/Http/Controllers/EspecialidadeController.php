@@ -12,7 +12,8 @@ class EspecialidadeController extends Controller
      */
     public function index()
     {
-        //
+        $especialidades = Especialidade::all();
+        return response()->json($especialidades);
     }
 
     /**
