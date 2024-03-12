@@ -56,9 +56,11 @@ class MedicamentoController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Integer
      */
-    public function destroy(Medicamento $medicamento)
+    public function destroy($id)
     {
+        $medicamento = $this->medicamento->find($id);
         $medicamento->delete();
         return ['msg' => 'Medicamento excluido com sucesso!'];
     }
