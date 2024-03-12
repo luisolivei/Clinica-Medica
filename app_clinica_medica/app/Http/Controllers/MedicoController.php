@@ -12,7 +12,8 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        //
+        $medicos = Medico::all();
+        return response()->json($medicos);
     }
 
     /**
