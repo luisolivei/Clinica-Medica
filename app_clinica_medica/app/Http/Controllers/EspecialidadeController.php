@@ -7,6 +7,11 @@ use App\Models\Especialidade;
 
 class EspecialidadeController extends Controller
 {
+    protected $especialidade;
+    public function __construct(Especialidade $especialidade)
+    {
+        $this->especialidade = $especialidade;
+    }
     /**
      * Display a listing of the resource.
      */
