@@ -34,9 +34,11 @@ class MedicamentoController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Integer
      */
-    public function show(Medicamento $medicamento)
+    public function show($id)
     {
+        $medicamento = $this->medicamento->find($id);
         return response()->json($medicamento);
     }
 
