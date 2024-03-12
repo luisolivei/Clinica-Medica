@@ -45,8 +45,9 @@ class PacienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Paciente $paciente)
     {
-        //
+        $paciente->delete();
+        return ['msg' => 'Paciente excluido com sucesso!'];
     }
 }
