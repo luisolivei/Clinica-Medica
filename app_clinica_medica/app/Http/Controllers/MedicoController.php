@@ -39,6 +39,9 @@ class MedicoController extends Controller
     public function show($id)
     {
         $medico = $this->medico->find($id);
+        if ($medico === null) {
+            return response()->json(['erro' => 'Medico não encontrado'], 404);
+        }
         return response()->json($medico);
     }
 
