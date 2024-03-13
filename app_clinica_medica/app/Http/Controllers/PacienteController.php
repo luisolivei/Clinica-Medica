@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\PacienteRepository;
 
 class PacienteController extends Controller
 {
@@ -15,11 +16,35 @@ class PacienteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $pacientes = Paciente::all();
-        $pacientes = $this->paciente->all();
-        return response()->json($pacientes,200);
+        $pacienteRepository = new PacienteRepository($this->paciente);
+
+        if ($request->has('atributos_consulta')) {
+            $atributos_consulta = 'consulta:id,' . $request->atributos_consulta;
+
+
+            $pacienteRepository->selectAtributosRegistrosRelacionados($atributos_consulta);
+        } else {
+
+            $pacienteRepository->selectAtributosRegistrosRelacionados('consulta');
+        }
+
+        if ($request->has('filtro')) {
+            $pacienteRepository->filtro($request->filtro);
+        }
+
+
+        if ($request->has('atributos')) {
+
+            $pacienteRepository->selectAtributos($request->atributos);
+        }
+
+
+
+
+        return response()->json($pacienteRepository->getResultado(), 200);
     }
 
     /**
@@ -60,7 +85,7 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
-        $paciente = $this->paciente->find($id);
+        $paciente = $this->paciente->with('consulta')->find($id);
         if($paciente === null){
             return response()->json(['erro' => 'Paciente não encontrado'], 404);
         }
@@ -93,7 +118,7 @@ class PacienteController extends Controller
 
             $request->validate($regrasDinamicas);
         } else {
-            $request->validate($paciente->rules(), $paciente->feedback());
+            $request->validate($paciente->rules());
         }
         if ($request->file('imagem')) {
             Storage::disk('public')->delete($paciente->imagem);
