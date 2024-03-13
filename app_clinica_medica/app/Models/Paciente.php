@@ -31,7 +31,7 @@ class Paciente extends Model
             'email' => 'required|unique:pacientes,email,' . $this->id,
             'nif' => 'required|unique:pacientes,nif,' . $this->id,
             'genero' => 'required',
-            'imagem' => 'required|image',
+            'imagem' =>'required |file|mimes:jpeg,png'
         ];
     }
 
@@ -42,7 +42,7 @@ class Paciente extends Model
             'telemovel.max' => 'O campo :attribute deve ter no maximo 12 carateres',
             'unique' => 'O campo :attribute deve ser unico',
             'nome.min' => 'O campo :attribute deve ter no minimo 3 carateres',
-            'imagem' => 'O campo :attribute deve ser uma imagem',
+            'imagem.mimes' => 'O arquivo deve ser jpeg ou png',
 
         ];
     }
