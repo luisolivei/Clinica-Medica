@@ -8,6 +8,8 @@ use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\EspecialidadeController;
+use App\Models\Consulta;
+use App\Models\Especialidade;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/many-to-many', function () {
+   $especialidade = Especialidade::with('consultas')->find(1);
+   $consulta = Consulta::find(1);
 
+   $especialidade->consultas()->saveMany([Consulta::find(2),Consulta::find(3)]);
+
+   $especialidade->refresh();
+   dd($especialidade->consultas);
+
+});
 Route::apiResource('/pacientes', PacienteController::class);
 Route::apiResource('/medicos', MedicoController::class);
 Route::apiResource('/medicamento', MedicamentoController::class);
