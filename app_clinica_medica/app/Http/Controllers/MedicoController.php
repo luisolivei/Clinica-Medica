@@ -30,6 +30,8 @@ class MedicoController extends Controller
         // $medico = Medico::create($request->all());
         // $medico = $this->medico->create($request->all());
         $request->validate($this->medico->rules(), $this->medico->feedback());
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
 
         $medico = $this->medico->create([
             'nome_medico' => $request->nome_medico,
@@ -37,12 +39,11 @@ class MedicoController extends Controller
             'data_nascimento' => $request->data_nascimento,
             'telemovel' => $request->telemovel,
             'email' => $request->email,
-            'imagem' => $request->imagem,
+            'imagem' => $request->imagem_urn,
 
         ]);
 
-        $image = $request->file('imagem');
-        $image->store('imagens' , 'public');
+
 
         return response()->json($medico, 201);
     }
