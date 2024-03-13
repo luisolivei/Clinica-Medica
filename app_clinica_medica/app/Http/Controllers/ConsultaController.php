@@ -24,16 +24,18 @@ class ConsultaController extends Controller
 
 
 
+
         if ($request->has('atributos_paciente')) {
 
             $atributos_paciente = 'pacientes:id,' . $request->atributos_paciente;
 
 
 
-            $consultaRepository->selectAtributosRegistrosRelacionados([$atributos_paciente]);
+
+            $consultaRepository->selectAtributosRegistrosRelacionados([$atributos_paciente ]);
         } else {
 
-            $consultaRepository->selectAtributosRegistrosRelacionados( 'paciente',);
+            $consultaRepository->selectAtributosRegistrosRelacionados( 'paciente', 'consulta_especialidade');
         }
 
         if ($request->has('filtro')) {
@@ -82,7 +84,7 @@ class ConsultaController extends Controller
      */
     public function show($id)
     {
-        $consulta = $this->consulta->with('paciente')->find($id);
+        $consulta = $this->consulta->with('paciente' , 'especialidade')->find($id);
         if ($consulta === null) {
             return response()->json(['erro' => 'Consulta não encontrada'], 404);
         }
