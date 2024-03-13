@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('morada', 255);
             $table->string('codigopostal', 9);
             $table->string('nif', 9)->unique();
-            $table->string('imagem', 255)->nullable()->comment('Imagem do paciente');
+            $table->string('imagem', 255)->comment('Imagem do paciente');
             $table->date('data_nascimento');
             $table->string('telemovel', 26)->unique();
             $table->string('email')->unique();
