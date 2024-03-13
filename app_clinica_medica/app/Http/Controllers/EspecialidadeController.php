@@ -21,12 +21,13 @@ class EspecialidadeController extends Controller
         // $especialidades = Especialidade::all();
         $especialidadeRepository = new EspecialidadeRepository($this->especialidade);
 
-        if ($request->has('atributos_medicos')) {
+        if ($request->has('atributos_medicos', 'atributos_consultas')) {
             $atributos_medicos = 'medicos:id,' . $request->atributos_medicos;
+            $atributos_consultas = 'consultas:id,' . $request->atributos_consultas;
 
-            $especialidadeRepository->selectAtributosRegistrosRelacionados($atributos_medicos);
+            $especialidadeRepository->selectAtributosRegistrosRelacionados($atributos_medicos, $atributos_consultas);
         } else {
-            $especialidadeRepository->selectAtributosRegistrosRelacionados('medicos');
+            $especialidadeRepository->selectAtributosRegistrosRelacionados('medicos', 'consultas');
         }
 
         if ($request->has('filtro')) {
@@ -67,7 +68,7 @@ class EspecialidadeController extends Controller
      */
     public function show($id)
     {
-        $especialidade = $this->especialidade->with('medicos')->find($id);
+        $especialidade = $this->especialidade->with('medicos', 'consultas')->find($id);
         if ($especialidade === null) {
             return response()->json(['erro' => 'Especialidade não encontrada'], 404);
         }
