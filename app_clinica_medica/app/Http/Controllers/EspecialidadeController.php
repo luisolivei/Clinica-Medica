@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Especialidade;
+use App\Repositories\EspecialidadeRepository;
 
 class EspecialidadeController extends Controller
 {
@@ -15,11 +16,34 @@ class EspecialidadeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $especialidades = Especialidade::all();
-        $especialidades = $this->especialidade->with('medicos')->get();
-        return response()->json($especialidades ,200);
+        $especialidadeRepository = new EspecialidadeRepository($this->especialidade);
+
+        if ($request->has('atributos_medicos')) {
+            $atributos_medicos = 'medicos:id,' . $request->atributos_medicos;
+
+            $especialidadeRepository->selectAtributosRegistrosRelacionados($atributos_medicos);
+        } else {
+            $especialidadeRepository->selectAtributosRegistrosRelacionados('medicos');
+        }
+
+        if ($request->has('filtro')) {
+            $especialidadeRepository->filtro($request->filtro);
+        }
+
+
+        if ($request->has('atributos')) {
+
+
+            $especialidadeRepository->selectAtributos($request->atributos);
+        }
+
+
+
+
+        return response()->json($especialidadeRepository->getResultado(), 200);
     }
 
     /**
@@ -77,7 +101,7 @@ class EspecialidadeController extends Controller
 
             $request->validate($regrasDinamicas, $especialidade->feedback());
         } else {
-            $request->validate($especialidade->rules(), $especialidade->feedback());
+            $request->validate($especialidade->rules());
         }
 
         $especialidade->fill($request->all());
