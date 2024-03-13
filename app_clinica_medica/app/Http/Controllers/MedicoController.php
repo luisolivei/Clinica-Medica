@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medico;
 use Illuminate\Http\Request;
+use App\Repositories\MedicoRepository;
 use Illuminate\Support\Facades\Storage;
 
 class MedicoController extends Controller
@@ -21,35 +22,32 @@ class MedicoController extends Controller
 
 
 
-        $medico= array();
+        $medicoRepository = new MedicoRepository($this->medico);
 
-        if($request->has('atributos_especialidade')) {
-            $atributos_especialidade = $request->atributos_especialidade;
-            $medico = $this->medico->with('especialidade:id,' . $atributos_especialidade) ;
-        }else {
-            $medico = $this->medico->with('especialidade');
+        if ($request->has('atributos_especialidades', 'atributos_agendas')) {
+            $atributos_especialidades = 'especialidades:id,' . $request->atributos_especialidades;
+            $atributos_agendas = 'agendas:id,' . $request->atributos_agendas;
+
+            $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidades, $atributos_agendas);
+        } else {
+
+            $medicoRepository->selectAtributosRegistrosRelacionados('especialidades', 'agendas');
         }
-        if($request->has('filtro')) {
 
-            $filtros = explode(';',$request->filtro);
-            foreach($filtros as $key => $condicao) {
-                $c = explode(':',$condicao);
-                $medico = $medico->where($c[0],$c[1],$c[2]);
-            }
-
+        if ($request->has('filtro')) {
+            $medicoRepository->filtro($request->filtro);
         }
-        if($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $medico = $medico->selectRaw($atributos)->get();
 
-        }else {
-            $medico = $medico->get();
+
+        if ($request->has('atributos')) {
+
+            $medicoRepository->selectAtributos($request->atributos);
         }
 
 
 
-        // $medicos = Medico::all();
-        return response()->json($medico, 200);
+
+        return response()->json($medicoRepository->getResultado(), 200);
 
 
     }
@@ -124,7 +122,7 @@ class MedicoController extends Controller
             $request->validate($regrasDinamicas);
         } else {
             $request->validate($medico->rules());
-            $medico->feedback();
+            
         }
 
         if ($request->file('imagem')) {
