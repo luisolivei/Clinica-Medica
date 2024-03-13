@@ -21,12 +21,23 @@ class MedicoController extends Controller
 
 
         $medico= array();
+
+        if($request->has('atributos_especialidade')) {
+            $atributos_especialidade = $request->atributos_especialidade;
+            $medico = $this->medico->with('especialidade:id,' . $atributos_especialidade) ;
+        }else {
+            $medico = $this->medico->with('especialidade');
+        }
+        if($request->has('filtro')) {
+            $condicoes = explode(':',$request->filtro);
+            $medico = $medico->where($condicoes[0],$condicoes[1],$condicoes[2]);
+        }
         if($request->has('atributos')) {
             $atributos = $request->atributos;
-            $medico = $this->medico->selectRaw($atributos)->with('especialidade')->get();
+            $medico = $medico->selectRaw($atributos)->get();
 
         }else {
-            $medico = $this->medico->with('especialidade')->get();
+            $medico = $medico->get();
         }
 
 
