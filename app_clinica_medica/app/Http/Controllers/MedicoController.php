@@ -16,13 +16,26 @@ class MedicoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // $medicos = Medico::all();
-        $medicos = $this->medico->with('especialidade')->get();
-        return response()->json($medicos, 200);
-    }
+    public function index(Request $request) {
 
+
+
+        $medico= array();
+        if($request->has('atributos')) {
+            $atributos = $request->atributos;
+            $medico = $this->medico->selectRaw($atributos)->with('especialidade')->get();
+
+        }else {
+            $medico = $this->medico->with('especialidade')->get();
+        }
+
+
+
+        // $medicos = Medico::all();
+        return response()->json($medico, 200);
+
+
+    }
     /**
      * Store a newly created resource in storage.
      */
