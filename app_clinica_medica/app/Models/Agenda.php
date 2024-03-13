@@ -36,14 +36,14 @@ class Agenda extends Model
     }
 
 
-    public function medicos()
+    public function medico()
     {
         // uma agenda tem um medico
         return $this->belongsTo(Medico::class, 'id_medicos', 'id');
     }
 
 
-    public function consultas()
+    public function consulta()
     {
         // uma agenda tem uma consulta
         return $this->belongsTo(Consulta::class, 'id_consultas', 'id');
