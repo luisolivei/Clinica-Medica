@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medico;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MedicoController extends Controller
 {
@@ -19,7 +20,7 @@ class MedicoController extends Controller
     {
         // $medicos = Medico::all();
         $medicos = $this->medico->all();
-        return response()->json($medicos ,200);
+        return response()->json($medicos, 200);
     }
 
     /**
@@ -63,7 +64,7 @@ class MedicoController extends Controller
         if ($medico === null) {
             return response()->json(['erro' => 'Medico não encontrado'], 404);
         }
-        return response()->json($medico,200);
+        return response()->json($medico, 200);
     }
 
     /**
@@ -95,7 +96,25 @@ class MedicoController extends Controller
             $request->validate($medico->rules());
         }
 
+        if ($request->file('imagem')) {
+            Storage::disk('public')->delete($medico->imagem);
+        }
 
+
+
+        $medico->update([
+            'nome_medico' => $request->nome_medico,
+            'id_especialidades' => $request->id_especialidades,
+            'data_nascimento' => $request->data_nascimento,
+            'telemovel' => $request->telemovel,
+            'email' => $request->email,
+            'imagem' => $request->imagem_urn,
+
+        ]);
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        $medico->imagem = $imagem_urn;
         $medico->fill($request->all());
         $medico->save();
         return response()->json($medico, 200);
@@ -104,6 +123,7 @@ class MedicoController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param Integer
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -111,6 +131,9 @@ class MedicoController extends Controller
         if ($medico === null) {
             return response()->json(['erro' => 'Impossivel realizar a exclusão. Médico não encontrado'], 404);
         }
+
+        Storage::disk('public')->delete($medico->imagem);
+
         $medico->delete();
         return response()->json(['msg' => 'Médico excluido com sucesso!'], 200);
     }
