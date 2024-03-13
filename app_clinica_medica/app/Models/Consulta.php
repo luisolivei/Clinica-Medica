@@ -39,19 +39,19 @@ class Consulta extends Model
     }
 
 
-    public function paciente()
+    public function pacientes()
     {
         // uma consulta tem um paciente
         return $this->belongsTo(Paciente::class, 'id_pacientes');
     }
 
-    public function agenda()
+    public function agendas()
     {
         // uma consulta tem uma agenda
         return $this->belongsTo(Agenda::class, 'id_agendas');
     }
 
-    public function especialidade()
+    public function especialidades()
     {
         // uma consulta tem muitas especialidades
         return $this->belongsToMany(Especialidade::class, 'id_especialidades');
