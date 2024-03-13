@@ -24,11 +24,11 @@ class MedicoController extends Controller
 
         $medicoRepository = new MedicoRepository($this->medico);
 
-        if ($request->has('atributos_especialidade', 'atributos_agendas')) {
+        if ($request->has('atributos_especialidade', 'atributos_agenda')) {
             $atributos_especialidade = 'especialidade:id,' . $request->atributos_especialidade;
-            $atributos_agendas = 'agenda:id,' . $request->atributos_agendas;
+            $atributos_agenda = 'agenda:id,' . $request->atributos_agenda;
 
-            $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidade, $atributos_agendas);
+            $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidade, $atributos_agenda);
         } else {
 
             $medicoRepository->selectAtributosRegistrosRelacionados('especialidade', 'agenda');
@@ -88,7 +88,7 @@ class MedicoController extends Controller
      */
     public function show($id)
     {
-        $medico = $this->medico->with('especialidade')->find($id);
+        $medico = $this->medico->with('especialidade', 'agenda')->find($id);
         if ($medico === null) {
             return response()->json(['erro' => 'Medico não encontrado'], 404);
         }
