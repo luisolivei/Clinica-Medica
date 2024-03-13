@@ -24,14 +24,14 @@ class MedicoController extends Controller
 
         $medicoRepository = new MedicoRepository($this->medico);
 
-        if ($request->has('atributos_especialidades', 'atributos_agendas')) {
-            $atributos_especialidades = 'especialidades:id,' . $request->atributos_especialidades;
+        if ($request->has('atributos_especialidade', 'atributos_agendas')) {
+            $atributos_especialidade = 'especialidade:id,' . $request->atributos_especialidade;
             $atributos_agendas = 'agendas:id,' . $request->atributos_agendas;
 
-            $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidades, $atributos_agendas);
+            $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidade, $atributos_agendas);
         } else {
 
-            $medicoRepository->selectAtributosRegistrosRelacionados('especialidades', 'agendas');
+            $medicoRepository->selectAtributosRegistrosRelacionados('especialidade', 'agendas');
         }
 
         if ($request->has('filtro')) {
@@ -122,7 +122,7 @@ class MedicoController extends Controller
             $request->validate($regrasDinamicas);
         } else {
             $request->validate($medico->rules());
-            
+
         }
 
         if ($request->file('imagem')) {
