@@ -19,7 +19,7 @@ class MedicoController extends Controller
     public function index()
     {
         // $medicos = Medico::all();
-        $medicos = $this->medico->all();
+        $medicos = $this->medico->with('especialidade')->get();
         return response()->json($medicos, 200);
     }
 
@@ -60,7 +60,7 @@ class MedicoController extends Controller
      */
     public function show($id)
     {
-        $medico = $this->medico->find($id);
+        $medico = $this->medico->with('especialidade')->find($id);
         if ($medico === null) {
             return response()->json(['erro' => 'Medico não encontrado'], 404);
         }
@@ -94,6 +94,7 @@ class MedicoController extends Controller
             $request->validate($regrasDinamicas);
         } else {
             $request->validate($medico->rules());
+            $medico->feedback();
         }
 
         if ($request->file('imagem')) {
@@ -102,20 +103,20 @@ class MedicoController extends Controller
 
 
 
-        $medico->update([
-            'nome_medico' => $request->nome_medico,
-            'id_especialidades' => $request->id_especialidades,
-            'data_nascimento' => $request->data_nascimento,
-            'telemovel' => $request->telemovel,
-            'email' => $request->email,
-            'imagem' => $request->imagem_urn,
+        // $medico->update([
+        //     'nome_medico' => $request->nome_medico,
+        //     'id_especialidades' => $request->id_especialidades,
+        //     'data_nascimento' => $request->data_nascimento,
+        //     'telemovel' => $request->telemovel,
+        //     'email' => $request->email,
+        //     'imagem' => $request->imagem_urn,
 
-        ]);
+        // ]);
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
 
-        $medico->imagem = $imagem_urn;
         $medico->fill($request->all());
+        $medico->imagem = $imagem_urn;
         $medico->save();
         return response()->json($medico, 200);
     }
