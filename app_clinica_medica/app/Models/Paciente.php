@@ -47,7 +47,7 @@ class Paciente extends Model
         ];
     }
 
-    public function consulta()
+    public function consultas()
 
     {
         // um paciente tem muitas consultas
