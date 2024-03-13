@@ -40,6 +40,10 @@ class MedicoController extends Controller
             'imagem' => $request->imagem,
 
         ]);
+
+        $image = $request->file('imagem');
+        $image->store('imagens' , 'public');
+
         return response()->json($medico, 201);
     }
 
