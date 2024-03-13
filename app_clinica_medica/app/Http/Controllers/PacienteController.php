@@ -21,14 +21,14 @@ class PacienteController extends Controller
         // $pacientes = Paciente::all();
         $pacienteRepository = new PacienteRepository($this->paciente);
 
-        if ($request->has('atributos_consulta')) {
-            $atributos_consulta = 'consulta:id,' . $request->atributos_consulta;
+        if ($request->has('atributos_consultas')) {
+            $atributos_consultas = 'consultas:id,' . $request->atributos_consultas;
 
 
-            $pacienteRepository->selectAtributosRegistrosRelacionados($atributos_consulta);
+            $pacienteRepository->selectAtributosRegistrosRelacionados($atributos_consultas);
         } else {
 
-            $pacienteRepository->selectAtributosRegistrosRelacionados('consulta');
+            $pacienteRepository->selectAtributosRegistrosRelacionados('consultas');
         }
 
         if ($request->has('filtro')) {
@@ -85,7 +85,7 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
-        $paciente = $this->paciente->with('consulta')->find($id);
+        $paciente = $this->paciente->with('consultas')->find($id);
         if($paciente === null){
             return response()->json(['erro' => 'Paciente não encontrado'], 404);
         }
