@@ -22,6 +22,10 @@ class ConsultaController extends Controller
         // $consultas = Consulta::all();
         $consultaRepository = new ConsultaRepository($this->consulta);
 
+       
+
+
+
 
 
 
