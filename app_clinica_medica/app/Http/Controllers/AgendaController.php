@@ -21,15 +21,15 @@ class AgendaController extends Controller
         // $agendas = Agenda::all();
         $agendaRepository = new AgendaRepository($this->agenda);
 
-        if ($request->has('atributos_medicos,atributos_consultas')) {
-            $atributos_medicos = 'medicos:id,' . $request->atributos_medicos;
-            $atributos_consultas = 'consultas:id,' . $request->atributos_consultas;
+        if ($request->has('atributos_medico,atributos_consulta')) {
+            $atributos_medico = 'medicos:id,' . $request->atributos_medico;
+            $atributos_consulta = 'consultas:id,' . $request->atributos_consulta;
 
 
-            $agendaRepository->selectAtributosRegistrosRelacionados([$atributos_medicos, $atributos_consultas]);
+            $agendaRepository->selectAtributosRegistrosRelacionados([$atributos_medico, $atributos_consulta]);
         } else {
 
-            $agendaRepository->selectAtributosRegistrosRelacionados('medicos', 'consultas');
+            $agendaRepository->selectAtributosRegistrosRelacionados('medico', 'consulta');
         }
 
         if ($request->has('filtro')) {
@@ -76,7 +76,7 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        $agenda = $this->agenda->with('medicos', 'consultas')->find($id);
+        $agenda = $this->agenda->with('medico', 'consulta')->find($id);
         if ($agenda === null) {
             return response()->json(['erro' => 'Agenda não encontrada'], 404);
         }
