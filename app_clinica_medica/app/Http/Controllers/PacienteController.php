@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PacienteController extends Controller
 {
@@ -38,12 +39,17 @@ class PacienteController extends Controller
             'email' => $request->email,
             'nif' => $request->nif,
             'genero' => $request->genero,
-            'imagem' => $request->imagem,
+            'imagem' => $request->imagem_urn,
 
 
 
 
         ]);
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        $paciente->imagem = $imagem_urn;
+        $paciente->save();
         return response()->json($paciente, 201);
     }
 
@@ -89,8 +95,14 @@ class PacienteController extends Controller
         } else {
             $request->validate($paciente->rules(), $paciente->feedback());
         }
+        if ($request->file('imagem')) {
+            Storage::disk('public')->delete($paciente->imagem);
+        }
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
 
         $paciente->fill($request->all());
+        $paciente->imagem = $imagem_urn;
         $paciente->save();
         return response()->json($paciente, 200);
     }
@@ -105,6 +117,7 @@ class PacienteController extends Controller
         if($paciente === null){
             return response()->json(['erro' => ' Impossivel realizar a exclusão. Paciente não encontrado'], 404);
         }
+        Storage::disk('public')->delete($paciente->imagem);
         $paciente->delete();
         return response()->json(['msg' => 'Paciente excluido com sucesso!'], 200);
     }
