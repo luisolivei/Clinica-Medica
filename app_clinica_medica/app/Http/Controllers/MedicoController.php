@@ -26,12 +26,12 @@ class MedicoController extends Controller
 
         if ($request->has('atributos_especialidade', 'atributos_agendas')) {
             $atributos_especialidade = 'especialidade:id,' . $request->atributos_especialidade;
-            $atributos_agendas = 'agendas:id,' . $request->atributos_agendas;
+            $atributos_agendas = 'agenda:id,' . $request->atributos_agendas;
 
             $medicoRepository->selectAtributosRegistrosRelacionados($atributos_especialidade, $atributos_agendas);
         } else {
 
-            $medicoRepository->selectAtributosRegistrosRelacionados('especialidade', 'agendas');
+            $medicoRepository->selectAtributosRegistrosRelacionados('especialidade', 'agenda');
         }
 
         if ($request->has('filtro')) {
