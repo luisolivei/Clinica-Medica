@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use Illuminate\Http\Request;
+use App\Repositories\AgendaRepository;
 
 class AgendaController extends Controller
 {
@@ -15,11 +16,37 @@ class AgendaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $agendas = Agenda::all();
-        $agendas = $this->agenda->all();
-        return response()->json($agendas,200);
+        $agendaRepository = new AgendaRepository($this->agenda);
+
+        if ($request->has('atributos_medicos,atributos_consultas')) {
+            $atributos_medicos = 'medicos:id,' . $request->atributos_medicos;
+            $atributos_consultas = 'consultas:id,' . $request->atributos_consultas;
+
+
+            $agendaRepository->selectAtributosRegistrosRelacionados([$atributos_medicos, $atributos_consultas]);
+        } else {
+
+            $agendaRepository->selectAtributosRegistrosRelacionados('medicos', 'consultas');
+        }
+
+        if ($request->has('filtro')) {
+
+            $agendaRepository->filtro($request->filtro);
+        }
+
+
+        if ($request->has('atributos')) {
+
+            $agendaRepository->selectAtributos($request->atributos);
+        }
+
+
+
+
+        return response()->json($agendaRepository->getResultado(), 200);
     }
 
     /**
@@ -49,7 +76,7 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        $agenda = $this->agenda->find($id);
+        $agenda = $this->agenda->with('medicos', 'consultas')->find($id);
         if ($agenda === null) {
             return response()->json(['erro' => 'Agenda não encontrada'], 404);
         }
