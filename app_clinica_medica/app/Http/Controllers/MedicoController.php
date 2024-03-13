@@ -15,6 +15,7 @@ class MedicoController extends Controller
     }
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
 
@@ -29,8 +30,13 @@ class MedicoController extends Controller
             $medico = $this->medico->with('especialidade');
         }
         if($request->has('filtro')) {
-            $condicoes = explode(':',$request->filtro);
-            $medico = $medico->where($condicoes[0],$condicoes[1],$condicoes[2]);
+
+            $filtros = explode(';',$request->filtro);
+            foreach($filtros as $key => $condicao) {
+                $c = explode(':',$condicao);
+                $medico = $medico->where($c[0],$c[1],$c[2]);
+            }
+
         }
         if($request->has('atributos')) {
             $atributos = $request->atributos;
