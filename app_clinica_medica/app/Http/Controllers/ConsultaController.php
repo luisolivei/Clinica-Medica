@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consulta;
 use Illuminate\Http\Request;
+use App\Repositories\ConsultaRepository;
 
 
 class ConsultaController extends Controller
@@ -16,11 +17,40 @@ class ConsultaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $consultas = Consulta::all();
-        $consultas = $this->consulta->all();
-        return response()->json($consultas ,200);
+        $consultaRepository = new ConsultaRepository($this->consulta);
+
+
+
+        if ($request->has('atributos_paciente')) {
+
+            $atributos_paciente = 'pacientes:id,' . $request->atributos_paciente;
+
+
+
+            $consultaRepository->selectAtributosRegistrosRelacionados([$atributos_paciente]);
+        } else {
+
+            $consultaRepository->selectAtributosRegistrosRelacionados( 'paciente',);
+        }
+
+        if ($request->has('filtro')) {
+            $consultaRepository->filtro($request->filtro);
+        }
+
+
+
+        if ($request->has('atributos')) {
+
+            $consultaRepository->selectAtributos($request->atributos);
+        }
+
+
+
+        return response()->json($consultaRepository->getResultado(), 200);
+
     }
 
     /**
@@ -52,7 +82,7 @@ class ConsultaController extends Controller
      */
     public function show($id)
     {
-        $consulta = $this->consulta->find($id);
+        $consulta = $this->consulta->with('paciente')->find($id);
         if ($consulta === null) {
             return response()->json(['erro' => 'Consulta não encontrada'], 404);
         }
@@ -86,7 +116,7 @@ class ConsultaController extends Controller
 
             $request->validate($regrasDinamicas);
         } else {
-            $request->validate($consulta->rules(), $consulta->feedback());;
+            $request->validate($consulta->rules(), );;
         }
 
         $consulta->fill($request->all());
