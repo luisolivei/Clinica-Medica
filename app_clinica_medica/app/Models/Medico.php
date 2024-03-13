@@ -28,7 +28,7 @@ class Medico extends Model
             'telemovel' => 'required |unique:medicos,telemovel',
             'email' => 'required |unique:medicos,email',
             'id_especialidades' => 'required |exists:especialidades,id',
-            'imagem' => 'required |image',
+            'imagem' => 'required |file|mimes:jpeg,png'
 
         ];
     }
