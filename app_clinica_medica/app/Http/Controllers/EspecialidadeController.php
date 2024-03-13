@@ -18,7 +18,7 @@ class EspecialidadeController extends Controller
     public function index()
     {
         // $especialidades = Especialidade::all();
-        $especialidades = $this->especialidade->all();
+        $especialidades = $this->especialidade->with('medicos')->get();
         return response()->json($especialidades ,200);
     }
 
@@ -43,7 +43,7 @@ class EspecialidadeController extends Controller
      */
     public function show($id)
     {
-        $especialidade = $this->especialidade->find($id);
+        $especialidade = $this->especialidade->with('medicos')->find($id);
         if ($especialidade === null) {
             return response()->json(['erro' => 'Especialidade não encontrada'], 404);
         }
