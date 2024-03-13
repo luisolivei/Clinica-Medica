@@ -30,8 +30,7 @@ class MedicoController extends Controller
         // $medico = Medico::create($request->all());
         // $medico = $this->medico->create($request->all());
         $request->validate($this->medico->rules(), $this->medico->feedback());
-        $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens', 'public');
+
 
         $medico = $this->medico->create([
             'nome_medico' => $request->nome_medico,
@@ -42,6 +41,12 @@ class MedicoController extends Controller
             'imagem' => $request->imagem_urn,
 
         ]);
+
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        $medico->imagem = $imagem_urn;
+        $medico->save();
 
 
 
