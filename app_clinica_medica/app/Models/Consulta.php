@@ -51,7 +51,7 @@ class Consulta extends Model
         return $this->belongsTo(Agenda::class, 'id_agendas');
     }
 
-    public function especialidades()
+    public function especialidade()
     {
         // uma consulta tem muitas especialidades
         return $this->belongsToMany(Especialidade::class , 'consulta_especialidade', 'id_consultas', 'id_especialidades');
