@@ -23,28 +23,33 @@ use App\Http\Controllers\EspecialidadeController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum'], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::apiResource('/pacientes', PacienteController::class);
+    Route::apiResource('/medicos', MedicoController::class);
+    Route::apiResource('/medicamento', MedicamentoController::class);
+    Route::apiResource('/especialidades', EspecialidadeController::class);
+    Route::apiResource('/agenda', AgendaController::class);
+    Route::apiResource('/consultas', ConsultaController::class);
+
+    Route::get('/consulta_especialidade', function () {
+        $especialidade = Especialidade::with('consultas')->find(2);
+        $consulta = Consulta::find(1);
+        $especialidade->consultas()->saveMany([Consulta::find(2)]);
+
+        $especialidade->refresh();
+
+        return $especialidade;
+    });
+
+    Route::post('/logout',[AuthController::class, 'logout']);
+    
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/consulta_especialidade', function () {
-    $especialidade = Especialidade::with('consultas')->find(2);
-   $consulta = Consulta::find(1);
-   $especialidade->consultas()->saveMany([Consulta::find(2)]);
 
-   $especialidade->refresh();
-
-   return $especialidade;
-
-});
-
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::apiResource('/pacientes', PacienteController::class);
-Route::apiResource('/medicos', MedicoController::class);
-Route::apiResource('/medicamento', MedicamentoController::class);
-Route::apiResource('/especialidades', EspecialidadeController::class);
-Route::apiResource('/agenda', AgendaController::class);
-Route::apiResource('/consultas', ConsultaController::class);
