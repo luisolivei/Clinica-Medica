@@ -118,7 +118,9 @@ class PacienteController extends Controller
 
             $request->validate($regrasDinamicas);
         } else {
-            $request->validate($paciente->rules());
+            $request->validate($paciente->rules(), $paciente->feedback());
+
+
         }
         if ($request->file('imagem')) {
             Storage::disk('public')->delete($paciente->imagem);
@@ -126,8 +128,18 @@ class PacienteController extends Controller
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
 
-        $paciente->fill($request->all());
         $paciente->imagem = $imagem_urn;
+        $paciente->update([
+            'nome_paciente' => $request->nome_paciente,
+            'morada' => $request->morada,
+            'data_nascimento' => $request->data_nascimento,
+            'telemovel' => $request->telemovel,
+            'email' => $request->email,
+            'nif' => $request->nif,
+            'genero' => $request->genero,
+            'imagem' => $imagem_urn,
+        ]);
+
         $paciente->save();
         return response()->json($paciente, 200);
     }
