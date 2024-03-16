@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('id_consultas')->references('id')->on('consultas')->onDelete('cascade')->onUpdate('cascade');
             $table->date('data_agenda');
             $table->time('hora_agenda');
-            $table->enum('status_agenda', ['Agendada', 'Cancelada', 'Realizada']);
+            $table->enum('status_agenda', ['Agendada', 'Cancelada', 'Realizada']);  
             $table->timestamps();
         });
     }
