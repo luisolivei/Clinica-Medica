@@ -121,7 +121,7 @@ class MedicoController extends Controller
 
             $request->validate($regrasDinamicas);
         } else {
-            $request->validate($medico->rules());
+            $request->validate($medico->rules(), $medico->feedback());
 
         }
 
@@ -130,21 +130,20 @@ class MedicoController extends Controller
         }
 
 
-
-        // $medico->update([
-        //     'nome_medico' => $request->nome_medico,
-        //     'id_especialidades' => $request->id_especialidades,
-        //     'data_nascimento' => $request->data_nascimento,
-        //     'telemovel' => $request->telemovel,
-        //     'email' => $request->email,
-        //     'imagem' => $request->imagem_urn,
-
-        // ]);
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
+         $medico->update([
+             'nome_medico' => $request->nome_medico,
+             'id_especialidades' => $request->id_especialidades,
+             'data_nascimento' => $request->data_nascimento,
+             'telemovel' => $request->telemovel,
+             'email' => $request->email,
+             'imagem' => $request->imagem_urn,
 
-        $medico->fill($request->all());
-        $medico->imagem = $imagem_urn;
+         ]);
+
+
+        
         $medico->save();
         return response()->json($medico, 200);
     }
