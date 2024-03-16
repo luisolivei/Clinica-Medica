@@ -11,6 +11,7 @@ use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\EspecialidadeController;
+use Illuminate\Database\Eloquent\Model;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/consultas', ConsultaController::class);
 
     Route::get('/consulta_especialidade', function () {
-        $especialidade = Especialidade::with('consultas')->find(2);
+        $especialidade = Especialidade::with('consultas')->find(1);
+
         $consulta = Consulta::find(1);
-        $especialidade->consultas()->saveMany([Consulta::find(2)]);
+
+        $especialidade->consultas()->saveMany([Consulta::find(1), Consulta::find(2)]);
 
         $especialidade->refresh();
 
@@ -47,7 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::post('/logout',[AuthController::class, 'logout']);
-    
+
 });
 
 
